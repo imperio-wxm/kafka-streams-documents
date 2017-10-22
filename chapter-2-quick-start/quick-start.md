@@ -1,4 +1,4 @@
-# Kafka Streams 快速开始
+# Kafka Streams 快速入门
 
  > 本篇讲述如何利用Kafka Streams library，构建简单的Java 应用来进行端到端的kafka数据流计算
 
@@ -6,6 +6,7 @@
 
 | Software   | Version   |
 | ---------- |-----------|
+| JDK        | 1.8+      |
 | Kafka      | 0.10.2.1  |
 | Zookeeper  |           |
 
@@ -29,18 +30,18 @@
 
 ## 发送测试数据
 
-## WordCount程序
+## WordCount（词频统计Demo）
 
-- WordCount架构图
+- WordCount整体架构图
 
-
+![WordCount整体架构图](https://github.com/imperio-wxm/kafka-streams-documents/blob/64eb084c4c0efddf0d614e48b4bf2ab6c481784a/pictures/WordCount%E6%9E%B6%E6%9E%84%E5%9B%BE.png?raw=true)
 
 > 与批处理程序不同（Hadoop MapReduce），Kafka Streams 处理的是一个无穷、无边界的数据流，数据会一直不断的经过Kafka Streams，保证7x24小时的运行。
 
 ```java
 ```
 
-> Kafka Streams程序和正常的Java程序一样启动、停止、性能参数等
+> Kafka Streams程序和正常的Java程序一样启动、停止
 
 [完整Demo]()
 
