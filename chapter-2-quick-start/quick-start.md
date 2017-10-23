@@ -22,15 +22,40 @@
 - 利用脚本工具消费经过处理的数据，以便检查数据处理结构是否正确（同样可以通过Java Client编写Consumer程序实现）
 - 关闭Kafka 集群
 
-## 搭建单节点Kafka集群
+## 一、搭建单节点Kafka集群
 
 [请参考此篇文章-Kafka集群搭建]()
 
-## 创建Topic
+## 二、创建Topic
 
-## 发送测试数据
+> Kafka 自带工具：./kafka_2.11-0.10.2.1/bin 
 
-## WordCount（词频统计Demo）
+```shell
+
+// Create the input topic for producer, named wordcount-input
+
+./bin/kafka-topics --create \
+          --zookeeper localhost:2181 \
+          --replication-factor 3 \
+          --partitions 3 \
+          --topic wordcount-input
+
+// Create the output topic for consumer, named wordcount-output
+
+./bin/kafka-topics --create \
+          --zookeeper localhost:2181 \
+          --replication-factor 3 \
+          --partitions 3 \
+          --topic wordcount-output
+```
+
+- --zookeeper 为zookeeper地址
+- --replication-factor 为副本数
+- --partitions 为分区数
+
+## 三、发送测试数据
+
+## 四、WordCount（词频统计Demo）
 
 - WordCount整体架构图
 
@@ -45,6 +70,6 @@
 
 [完整Demo]()
 
-## 消费Topic
+## 五、消费Topic
 
-## 关闭Kafka集群
+## 六、关闭Kafka集群
