@@ -34,19 +34,23 @@
 
 // Create the input topic for producer, named wordcount-input
 
-./bin/kafka-topics --create \
+./bin/kafka-topics.sh --create \
           --zookeeper localhost:2181 \
-          --replication-factor 3 \
-          --partitions 3 \
+          --replication-factor 1 \
+          --partitions 1 \
           --topic wordcount-input
+
+Created topic "wordcount-input".
 
 // Create the output topic for consumer, named wordcount-output
 
-./bin/kafka-topics --create \
+./bin/kafka-topics.sh --create \
           --zookeeper localhost:2181 \
-          --replication-factor 3 \
-          --partitions 3 \
+          --replication-factor 1 \
+          --partitions 1 \
           --topic wordcount-output
+
+Created topic "wordcount-output".
 ```
 
 - --zookeeper 为zookeeper地址
@@ -54,6 +58,19 @@
 - --partitions 为分区数
 
 ## 三、发送测试数据
+
+> 利用 向wordcount-input topic发送数据
+
+```shell
+
+./kafka-console-producer.sh --broker-list localhost:9092 --topic wordcount-input
+
+// 一行一行输入以下内容
+hello world
+hello world
+kafka streams test
+kafka streams test
+```
 
 ## 四、WordCount（词频统计Demo）
 
@@ -71,5 +88,7 @@
 [完整Demo]()
 
 ## 五、消费Topic
+
+
 
 ## 六、关闭Kafka集群
