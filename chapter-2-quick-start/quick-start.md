@@ -59,11 +59,11 @@ Created topic "wordcount-output".
 
 ## 三、发送测试数据
 
-> 利用 向wordcount-input topic发送数据
+> 利用脚本向wordcount-input topic发送数据
 
 ```shell
 
-./kafka-console-producer.sh --broker-list localhost:9092 --topic wordcount-input
+./kafka-console-producer.sh --broker-list 192.168.1.112:9092 --topic wordcount-input
 
 // 一行一行输入以下内容
 hello world
@@ -89,6 +89,11 @@ kafka streams test
 
 ## 五、消费Topic
 
+> 利用脚本从wordcount-output topic读取数据
 
+```shell
+
+./kafka-console-consumer.sh --bootstrap-server 192.168.1.112:9092 --topic wordcount-output --from-beginning --formatter kafka.tools.DefaultMessageFormatter  --property print.key=true
+```
 
 ## 六、关闭Kafka集群
