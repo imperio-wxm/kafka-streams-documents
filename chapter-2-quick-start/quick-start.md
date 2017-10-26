@@ -97,3 +97,9 @@ kafka streams test
 ```
 
 ## 六、关闭Kafka集群
+
+- 首先关闭 Kafka Brokers
+
+- 其次关闭 ZooKeeper Instance
+
+> 如果是前台启动可以直接使用`Ctrl-C`来关闭；如果是后台启动，则可以用`kill PID` 的方式停止进程
