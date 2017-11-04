@@ -114,7 +114,7 @@ wordCounts.to(stringSerde, longSerde, "streams-wordcount-output");
 
 > Kafka Streams程序和正常的Java程序一样启动、停止
 
-[完整Demo]()
+[完整Demo(包含Java7、Java8)](https://github.com/imperio-wxm/kafka-best-practice/tree/master/demo-for-documents/streams-wordcount)
 
 ## 五、消费Topic
 
