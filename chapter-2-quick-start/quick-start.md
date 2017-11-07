@@ -80,6 +80,8 @@ kafka streams test
 
 > 与批处理程序不同（Hadoop MapReduce），Kafka Streams 处理的是一个无穷、无边界的数据流，数据会一直不断的经过Kafka Streams，保证7x24小时的运行。
 
+Lambda 核心代码：
+
 ```java
 // Serializers/deserializers (serde) for String and Long types
 final Serde<String> stringSerde = Serdes.String();
@@ -95,16 +97,14 @@ KStream<String, Long> wordCounts = textLines
     // values, i.e. we can ignore whatever data is in the message keys and thus invoke
     // `flatMapValues` instead of the more generic `flatMap`.
     .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
-    // We will subsequently invoke `countByKey` to count the occurrences of words, so we use
-    // `map` to ensure the words are available as message keys, too.
-    .map((key, value) -> new KeyValue<>(value, value))
+    .groupBy((key, value) -> value)
     // Count the occurrences of each word (message key).
     //
     // This will change the stream type from `KStream<String, String>` to
     // `KTable<String, Long>` (word -> count), hence we must provide serdes for `String`
     // and `Long`.
     //
-    .countByKey(stringSerde, "Counts")
+    .count("Counts")
     // Convert the `KTable<String, Long>` into a `KStream<String, Long>`.
     .toStream();
 
@@ -121,8 +121,21 @@ wordCounts.to(stringSerde, longSerde, "streams-wordcount-output");
 > 利用脚本从wordcount-output topic读取数据
 
 ```shell
+# Java 7
+./kafka-console-consumer.sh --bootstrap-server 192.168.1.112:9092 \
+    --topic wordcount-output \
+    --from-beginning \
+    --formatter kafka.tools.DefaultMessageFormatter \
+    --property print.key=true
 
-./kafka-console-consumer.sh --bootstrap-server 192.168.1.112:9092 --topic wordcount-output --from-beginning --formatter kafka.tools.DefaultMessageFormatter  --property print.key=true
+# Java 8 Lambda need value LongDeserializer
+./kafka-console-consumer.sh --bootstrap-server 192.168.1.112:9092 \
+    --topic wordcount-output \
+    --from-beginning \
+    --formatter kafka.tools.DefaultMessageFormatter  \
+    --property print.key=true \
+    --property key.deserializer=org.apache.kafka.common.serialization.StringDeserializer \
+    --property value.deserializer=org.apache.kafka.common.serialization.LongDeserializer
 ```
 
 ## 六、关闭Kafka集群
