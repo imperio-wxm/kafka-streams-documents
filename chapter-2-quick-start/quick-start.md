@@ -8,7 +8,7 @@
 | ---------- |-----------|
 | JDK        | 1.8+      |
 | Kafka      | 0.10.2.1  |
-| Zookeeper  |           |
+| Zookeeper  | 3.4.9     |
 
 > Oracle Java JRE or JDK >= 1.7 
 
@@ -25,6 +25,8 @@
 ## 一、搭建单节点Kafka集群
 
 [请参考此篇文章-Kafka集群搭建]()
+
+(PS: 这里并没有用Confluent Platform的平台产品，而是Apache Kafka 官网下载进行集群搭建)
 
 ## 二、创建Topic
 
@@ -79,6 +81,8 @@ kafka streams test
 ![WordCount整体架构图](https://github.com/imperio-wxm/kafka-streams-documents/blob/64eb084c4c0efddf0d614e48b4bf2ab6c481784a/pictures/WordCount%E6%9E%B6%E6%9E%84%E5%9B%BE.png?raw=true)
 
 > 与批处理程序不同（Hadoop MapReduce），Kafka Streams 处理的是一个无穷、无边界的数据流，数据会一直不断的经过Kafka Streams，保证7x24小时的运行。
+
+> 并且这是一个带状态的流式操作，需要持续更新每个词的状态（存储状态-定期的将中间结果保存到外部存储介质中，以达到记录词频的目的。
 
 Lambda 核心代码：
 
@@ -145,3 +149,5 @@ wordCounts.to(stringSerde, longSerde, "streams-wordcount-output");
 - 其次关闭 ZooKeeper Instance
 
 > 如果是前台启动可以直接使用`Ctrl-C`来关闭；如果是后台启动，则可以用`kill PID` 的方式停止进程
+
+> 至此，可以根据上述文章中的内容，构建一个简单的WrodCount程序来初步了解Kafka Streams的基本运作流程。
